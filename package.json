@@ -1,0 +1,19 @@
+{
+	"name": "espn-fantasy-baseball",
+	"version": "0.1.0",
+	"description": "A node wrapper that encompasses the ESPN Fantasy Baseball API",
+	"main": "index.js",
+	"repository": "https://github.com/Jabronious/espn-fantasy-baseball.git",
+	"author": "Jabronious",
+	"license": "MIT",
+	"keywords": [
+		"espn",
+		"fantasy",
+		"baseball",
+		"sports",
+		"api"
+	],
+	"devDependencies": {
+		"typescript": "^4.2.4"
+	}
+}
