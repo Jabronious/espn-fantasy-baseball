@@ -12,7 +12,9 @@ http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/{leagu
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645?view=mMatchup
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/{league_id}/teams/{team_id}/
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/members
-http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/members
+
+
+http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=proTeamSchedules_wl
 
 # Resources:
 Authenticating for private leagues:
