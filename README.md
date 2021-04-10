@@ -26,7 +26,7 @@ http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/
 - Gets MLB Team schedules  
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=proTeamSchedules_wl
 
-- Gets MLB players. Headers required 
+- Gets MLB players. Headers required  
     ![image](https://user-images.githubusercontent.com/14021591/114256743-1f4e7b00-9981-11eb-8778-a730c0a18d4b.png)     
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=players_wl
 
