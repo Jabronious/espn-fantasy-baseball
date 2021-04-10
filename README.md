@@ -31,7 +31,7 @@ http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=proTeamSchedules_wl
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=players_wl
 
 # Resources:
-Authenticating for private leagues:
-https://github.com/cwendt94/espn-api/discussions/150
-Inspired by:
-https://github.com/cwendt94/espn-api
+Authenticating for private leagues:  
+https://github.com/cwendt94/espn-api/discussions/150  
+Inspired by:  
+https://github.com/cwendt94/espn-api  
