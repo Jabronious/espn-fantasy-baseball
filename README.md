@@ -31,9 +31,9 @@ http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=proTeamSchedules_wl
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021?view=players_wl
 
 - POST Pick up player from waiver wire: 
-https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/transactions/ 
-Example Body:
-'''json
+https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/transactions/  
+Example Body:  
+``` 
 {
     "executionType": "EXECUTE",
     "isLeagueManager": false,
@@ -47,8 +47,8 @@ Example Body:
     "scoringPeriodId": 16,
     "teamId": 15,
     "type": "FREEAGENT"
-}
-'''
+}  
+```
 
 # Resources:
 Authenticating for private leagues:  
