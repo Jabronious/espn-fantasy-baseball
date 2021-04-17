@@ -14,11 +14,14 @@ http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/
 - Gets league by the league's id  
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/{league_id}/
 
-- \[scoreboard, mMatchup, mRoster, mSettings, mDraftDetail] (Different league pages)  
+- \[scoreboard (probably dont need), mMatchup, mRoster, mSettings, mDraftDetail, mTeam] (Different league pages)  
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645?view=mMatchup
 
 - Gets a specific team object  
-http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/{league_id}/teams/{team_id}/
+http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/{league_id}/teams/{team_id}/  
+https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/teams/15?view=scoreboard  
+https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/teams/15?view=mRoster  
+https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/teams/15?view=mTeam  
 
 - Gets a list of the current league memebers  
 http://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/members
@@ -48,6 +51,13 @@ Example Body:
     "teamId": 15,
     "type": "FREEAGENT"
 }  
+```  
+- POST add/remove players from watch list  
+https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645/teams/15  
+```
+{
+    "watchList": [31094, 30862, 39807, 32758]
+}
 ```
 
 # Resources:
