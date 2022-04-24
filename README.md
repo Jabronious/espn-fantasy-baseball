@@ -1,4 +1,5 @@
 # espn-fantasy-baseball
+[![ESPN Fantasy Baseball Actions](https://github.com/Jabronious/espn-fantasy-baseball/actions/workflows/espn-fb-actions.yml/badge.svg)](https://github.com/Jabronious/espn-fantasy-baseball/actions/workflows/espn-fb-actions.yml)  
 A node wrapper that encompasses the ESPN Fantasy Baseball API
 
 # Current Discovered Endpoints:
