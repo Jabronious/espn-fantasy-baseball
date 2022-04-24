@@ -18,7 +18,11 @@ export class FantasyRequest {
 	 * @param headers: required headers for the request being made
 	 * @param params: optional values to be made with the request
 	 */
-	async get(path: string = '', headers: unknown = {}, params: unknown = {}): Promise<AxiosResponse> {
+	async get(
+		path: string = '',
+		headers: { [key: string]: unknown } = {},
+		params: { [key: string]: unknown } = {}
+	): Promise<AxiosResponse> {
 		const setCookies = !this.cookies
 			? {}
 			: { Cookie: `espn_s2=${this.cookies?.espn_s2}; swid=${this.cookies?.swid};` };
@@ -26,7 +30,7 @@ export class FantasyRequest {
 		const request: AxiosRequestConfig = {
 			url: `${this.endpoint}${path}`,
 			method: 'GET',
-			params: params,
+			params,
 			headers: { headers, ...setCookies },
 		};
 
@@ -51,7 +55,7 @@ export class FantasyRequest {
 		const request: AxiosRequestConfig = {
 			url: `${this.endpoint}${path}`,
 			method: 'POST',
-			params: params,
+			params,
 			headers: { headers, ...setCookies },
 		};
 

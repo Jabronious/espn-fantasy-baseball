@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`League getLeagueMembers should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`League getLeagueMembers should get all league members 1`] = `
+Object {
+  "displayName": "string",
+  "id": 12345,
+  "isLeagueManager": true,
+}
+`;
+
+exports[`League getLeagueTeams should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`League getLeagueTeams should get all league teams 1`] = `
+Object {
+  "abbrev": "CDMD",
+}
+`;
+
+exports[`League getWeeklyMatchups should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`League getWeeklyMatchups should get the weekly matchups 1`] = `
+Array [
+  Object {
+    "matchupPeriodId": 1,
+  },
+]
+`;

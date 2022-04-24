@@ -2,6 +2,7 @@ import { ESPNCookiesDto } from './models/classes/espn-cookies.dto';
 import { MatchUpDto } from './models/classes/matchup.dto';
 import { MemberDto } from './models/classes/member.dto';
 import { TeamDto } from './models/classes/team.dto';
+import { Teams } from './teams';
 import { FantasyRequest } from './utils/fantasy-requests';
 
 export class League {
@@ -13,6 +14,13 @@ export class League {
 		this.leagueId = leagueId;
 		this.cookies = cookies;
 		this.fantasyRequests = new FantasyRequest(leagueId, cookies);
+	}
+
+	/**
+	 * @returns Teams object
+	 */
+	teams(): Teams {
+		return new Teams(this.leagueId, this.cookies);
 	}
 
 	/**
@@ -51,18 +59,5 @@ export class League {
 		);
 
 		return currentMatchUps;
-	}
-
-	/**
-	 * @param {number} teamId - team id for the team you wish to look up
-	 * @returns Team data for the given team id
-	 */
-	async getDetailedTeamData(teamId: number): Promise<TeamDto> {
-		const params = { view: 'mTeam' };
-		const response = await this.fantasyRequests.get(`/teams/${teamId}`, {}, params).catch((e) => {
-			throw new Error(e);
-		});
-
-		return response.data;
 	}
 }
