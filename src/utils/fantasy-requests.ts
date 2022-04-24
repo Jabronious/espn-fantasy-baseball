@@ -13,10 +13,10 @@ export class FantasyRequest {
 				: `${env.ESPN_BASE_ENDPOINT}/leagueHistory/${leagueId}?seasonId=${year}`;
 	}
 
-	/*
-	 * @Param path: requires that you have "/" at the front of the path
-	 * @Param headers: required headers for the request being made
-	 * @Param params: optional values to be made with the request
+	/**
+	 * @param {string} path: requires that you have "/" at the front of the path
+	 * @param headers: required headers for the request being made
+	 * @param params: optional values to be made with the request
 	 */
 	async get(path: string = '', headers: unknown = {}, params: unknown = {}): Promise<AxiosResponse> {
 		const setCookies = !this.cookies
@@ -34,12 +34,16 @@ export class FantasyRequest {
 		return response;
 	}
 
-	/*
-	 * @Param path: requires that you have "/" at the front of the path
-	 * @Param headers: required headers for the request being made
-	 * @Param params: optional values to be made with the request
+	/**
+	 * @param {string} path: requires that you have "/" at the front of the path
+	 * @param headers: required headers for the request being made
+	 * @param params: optional values to be made with the request
 	 */
-	async post(path: string = '', headers: unknown = {}, params: unknown = {}): Promise<AxiosResponse> {
+	async post(
+		path: string = '',
+		headers: { [key: string]: unknown } = {},
+		params: { [key: string]: unknown } = {}
+	): Promise<AxiosResponse> {
 		const setCookies = !this.cookies
 			? {}
 			: { Cookie: `espn_s2=${this.cookies?.espn_s2}; swid=${this.cookies?.swid};` };
@@ -55,6 +59,9 @@ export class FantasyRequest {
 		return response;
 	}
 
+	/**
+	 * @param {ESPNCookiesDto} cookies - Espn cookies used to authorize request
+	 */
 	setEspnCookies(cookies: ESPNCookiesDto): void {
 		this.cookies = cookies;
 	}
