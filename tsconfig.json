@@ -30,6 +30,6 @@
 		"lib": ["ES2019", "ESNext.AsyncIterable"]
 	},
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules/**"],
+	"exclude": ["node_modules/**", "src/tests", "src/mocks"],
 	"compileOnSave": false
 }
