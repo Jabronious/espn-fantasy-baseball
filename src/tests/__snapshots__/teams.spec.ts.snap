@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`League getAllTeamsRoster should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`League getAllTeamsRoster should get all the teams rosters 1`] = `
+Object {
+  "team two": Array [
+    Object {
+      "fullName": "Jose Ramirez",
+    },
+  ],
+  "team1": Array [
+    Object {
+      "fullName": "Jose Ramirez",
+    },
+  ],
+}
+`;
+
 exports[`League getDetailedTeamData should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`League getDetailedTeamData should get all details for a team 1`] = `

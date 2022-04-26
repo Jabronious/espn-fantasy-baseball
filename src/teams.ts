@@ -31,13 +31,45 @@ export class Teams {
 	 * @param {number} teamId - team id for the team you wish to get the roster for
 	 * @returns Team roster data for the given team id
 	 */
-	async getTeamRoster(teamId: number): Promise<[Player]> {
+	async getTeamRoster(teamId: number): Promise<Player[]> {
 		const params = { view: 'mRoster' };
 		const response = await this.fantasyRequests.get(`/teams/${teamId}`, {}, params).catch((e) => {
 			throw new Error(e);
 		});
 
-		return response.data.roster.entries.map((entry: { playerPoolEntry: { player: Player } }) => {
+		return this.getPlayersFromEspnRoster(
+			response.data.roster as { entries: [{ playerPoolEntry: { player: Player } }] }
+		);
+	}
+
+	/**
+	 * @returns All team roster data for the league
+	 */
+	async getAllTeamsRoster(): Promise<{ [key: string]: Player[] }> {
+		const params = { view: 'mRoster' };
+		const response = await this.fantasyRequests.get('', {}, params).catch((e) => {
+			throw new Error(e);
+		});
+
+		const teamData = (
+			await this.fantasyRequests.get('', {}, { view: 'mTeam' }).catch((e) => {
+				throw new Error(e);
+			})
+		).data.teams;
+
+		const teamRosters: { [key: string]: Player[] } = {};
+		teamData.forEach((team: { nickname: string; id: number }) => {
+			teamRosters[team.nickname] = this.getPlayersFromEspnRoster(
+				response.data.teams.find((rosterTeam: { id: number }) => {
+					return rosterTeam.id === team.id;
+				}).roster
+			);
+		});
+		return teamRosters;
+	}
+
+	private getPlayersFromEspnRoster(roster: { entries: [{ playerPoolEntry: { player: Player } }] }): Player[] {
+		return roster.entries.map((entry: { playerPoolEntry: { player: Player } }) => {
 			return entry.playerPoolEntry.player;
 		});
 	}
