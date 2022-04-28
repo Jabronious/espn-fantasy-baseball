@@ -61,6 +61,53 @@ https://fantasy.espn.com/apis/v3/games/flb/seasons/2021/segments/0/leagues/59645
 }
 ```
 
+# Example Param and Header Options:  
+`view` (Type: QueryParam): 
+```
+mTeam
+mBoxscore
+mRoster
+mSettings
+kona_player_info
+player_wl
+mSchedule
+mMatchup
+```  
+`x-fantasy-filter` (Type: Header):  
+```
+{
+  "players": {
+    "filterStatus": { "value": ["FREEAGENT", "WAIVERS"] },
+    "filterSlotIds": { "value": [2] },
+    "filterRanksForScoringPeriodIds": { "value": [19] },
+    "limit": 2000,
+    "offset": 0,
+    "sortPercOwned": { "sortAsc": false, "sortPriority": 1 },
+    "sortDraftRanks": {
+      "sortPriority": 100,
+      "sortAsc": true,
+      "value": "STANDARD"
+    },
+    "filterRanksForRankTypes": { "value": ["STANDARD"] },
+    "filterStatsForTopScoringPeriodIds": {
+      "value": 5,
+      "additionalValue": [
+        "002022",
+        "102022",
+        "002021",
+        "012022",
+        "022022",
+        "032022",
+        "042022",
+        "062022",
+        "010002022"
+      ]
+    }
+  }
+}
+
+```
+
 # Resources:
 Authenticating for private leagues:  
 https://github.com/cwendt94/espn-api/discussions/150  
