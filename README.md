@@ -72,6 +72,8 @@ kona_player_info
 player_wl
 mSchedule
 mMatchup
+mScoreboard
+scoreboard
 ```  
 `x-fantasy-filter` (Type: Header):  
 ```
