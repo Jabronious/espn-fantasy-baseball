@@ -1,17 +1,11 @@
+import { BaseClass } from './base-class';
 import { ESPNCookiesDto } from './models/classes/espn-cookies.dto';
-import { Player } from './models/classes/player.dto';
+import { PlayerDto } from './models/classes/player.dto';
 import { TeamDto } from './models/classes/team.dto';
-import { FantasyRequest } from './utils/fantasy-requests';
 
-export class Teams {
-	leagueId: number;
-	cookies: ESPNCookiesDto | undefined;
-	private fantasyRequests: FantasyRequest;
-
+export class Teams extends BaseClass {
 	constructor(leagueId: number, cookies?: ESPNCookiesDto) {
-		this.leagueId = leagueId;
-		this.cookies = cookies;
-		this.fantasyRequests = new FantasyRequest(leagueId, cookies);
+		super(leagueId, cookies);
 	}
 
 	/**
@@ -31,21 +25,21 @@ export class Teams {
 	 * @param {number} teamId - team id for the team you wish to get the roster for
 	 * @returns Team roster data for the given team id
 	 */
-	async getTeamRoster(teamId: number): Promise<Player[]> {
+	async getTeamRoster(teamId: number): Promise<PlayerDto[]> {
 		const params = { view: 'mRoster' };
 		const response = await this.fantasyRequests.get(`/teams/${teamId}`, {}, params).catch((e) => {
 			throw new Error(e);
 		});
 
 		return this.getPlayersFromEspnRoster(
-			response.data.roster as { entries: [{ playerPoolEntry: { player: Player } }] }
+			response.data.roster as { entries: [{ playerPoolEntry: { player: PlayerDto } }] }
 		);
 	}
 
 	/**
 	 * @returns All team roster data for the league
 	 */
-	async getAllTeamsRoster(): Promise<{ [key: string]: Player[] }> {
+	async getAllTeamsRoster(): Promise<{ [key: string]: PlayerDto[] }> {
 		const params = { view: 'mRoster' };
 		const response = await this.fantasyRequests.get('', {}, params).catch((e) => {
 			throw new Error(e);
@@ -57,7 +51,7 @@ export class Teams {
 			})
 		).data.teams;
 
-		const teamRosters: { [key: string]: Player[] } = {};
+		const teamRosters: { [key: string]: PlayerDto[] } = {};
 		teamData.forEach((team: { nickname: string; id: number }) => {
 			teamRosters[team.nickname] = this.getPlayersFromEspnRoster(
 				response.data.teams.find((rosterTeam: { id: number }) => {
@@ -68,8 +62,8 @@ export class Teams {
 		return teamRosters;
 	}
 
-	private getPlayersFromEspnRoster(roster: { entries: [{ playerPoolEntry: { player: Player } }] }): Player[] {
-		return roster.entries.map((entry: { playerPoolEntry: { player: Player } }) => {
+	private getPlayersFromEspnRoster(roster: { entries: [{ playerPoolEntry: { player: PlayerDto } }] }): PlayerDto[] {
+		return roster.entries.map((entry: { playerPoolEntry: { player: PlayerDto } }) => {
 			return entry.playerPoolEntry.player;
 		});
 	}

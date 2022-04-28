@@ -1,6 +1,6 @@
 import { IPlayer } from '../interfaces/i-player';
 
-export class Player implements IPlayer {
+export class PlayerDto implements IPlayer {
 	active: boolean;
 	defaultPositionId: number;
 	draftRanksByRankType: {};

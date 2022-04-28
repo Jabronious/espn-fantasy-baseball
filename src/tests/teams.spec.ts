@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Teams } from '../teams';
 
 const roster = { entries: [{ playerPoolEntry: { player: { fullName: 'Jose Ramirez' } } }] };
-describe('League', () => {
+describe('Teams', () => {
 	const teams = new Teams(1);
 
 	it('should be defined', () => {

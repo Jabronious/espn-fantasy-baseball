@@ -1,19 +1,14 @@
+import { BaseClass } from './base-class';
 import { ESPNCookiesDto } from './models/classes/espn-cookies.dto';
 import { MatchUpDto } from './models/classes/matchup.dto';
 import { MemberDto } from './models/classes/member.dto';
 import { TeamDto } from './models/classes/team.dto';
+import { Players } from './players';
 import { Teams } from './teams';
-import { FantasyRequest } from './utils/fantasy-requests';
 
-export class League {
-	leagueId: number;
-	cookies: ESPNCookiesDto | undefined;
-	private fantasyRequests: FantasyRequest;
-
+export class League extends BaseClass {
 	constructor(leagueId: number, cookies?: ESPNCookiesDto) {
-		this.leagueId = leagueId;
-		this.cookies = cookies;
-		this.fantasyRequests = new FantasyRequest(leagueId, cookies);
+		super(leagueId, cookies);
 	}
 
 	/**
@@ -21,6 +16,10 @@ export class League {
 	 */
 	teams(): Teams {
 		return new Teams(this.leagueId, this.cookies);
+	}
+
+	players(): Players {
+		return new Players(this.leagueId, this.cookies);
 	}
 
 	/**

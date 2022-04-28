@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`League getAllTeamsRoster should catch errors and throw them 1`] = `[Error: error]`;
+exports[`Teams getAllTeamsRoster should catch errors and throw them 1`] = `[Error: error]`;
 
-exports[`League getAllTeamsRoster should get all the teams rosters 1`] = `
+exports[`Teams getAllTeamsRoster should get all the teams rosters 1`] = `
 Object {
   "team two": Array [
     Object {
@@ -17,17 +17,17 @@ Object {
 }
 `;
 
-exports[`League getDetailedTeamData should catch errors and throw them 1`] = `[Error: error]`;
+exports[`Teams getDetailedTeamData should catch errors and throw them 1`] = `[Error: error]`;
 
-exports[`League getDetailedTeamData should get all details for a team 1`] = `
+exports[`Teams getDetailedTeamData should get all details for a team 1`] = `
 Object {
   "abbrev": "CDMD",
 }
 `;
 
-exports[`League getTeamRoster should catch errors and throw them 1`] = `[Error: error]`;
+exports[`Teams getTeamRoster should catch errors and throw them 1`] = `[Error: error]`;
 
-exports[`League getTeamRoster should get of a teams roster 1`] = `
+exports[`Teams getTeamRoster should get of a teams roster 1`] = `
 Array [
   Object {
     "fullName": "Jose Ramirez",

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Players getPlayerById should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`Players getPlayerById should get simple version of the player 1`] = `
+Object {
+  "defaultPositionId": 3,
+  "droppable": true,
+  "eligibleSlots": Array [
+    1,
+    7,
+    19,
+    12,
+    16,
+    17,
+  ],
+  "firstName": "Christian",
+  "fullName": "Christian Walker",
+  "id": 32758,
+  "lastName": "Walker",
+  "ownership": Object {
+    "percentOwned": 4.399557277255119,
+  },
+  "proTeamId": 29,
+  "universeId": 2,
+}
+`;
