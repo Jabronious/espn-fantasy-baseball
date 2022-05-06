@@ -8,9 +8,79 @@ describe('League', () => {
 		expect(league).toBeDefined();
 	});
 
+	describe('init', () => {
+		it('should get init team data', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: {
+					settings: {
+						rosterSettings: {
+							lineupSlotCounts: {
+								'0': 1,
+								'1': 1,
+								'2': 1,
+								'3': 1,
+								'4': 1,
+								'5': 5,
+								'6': 1,
+								'7': 1,
+								'8': 0,
+								'9': 0,
+								'10': 0,
+								'11': 0,
+								'12': 1,
+								'13': 0,
+								'14': 5,
+								'15': 3,
+								'16': 4,
+								'17': 3,
+								'18': 0,
+								'19': 0,
+							},
+						},
+						scoringSettings: {
+							scoringItems: [
+								{
+									isReverseItem: false,
+									leagueRanking: 0.0,
+									leagueTotal: 0.0,
+									points: 1.0,
+									statId: 20,
+								},
+								{
+									isReverseItem: false,
+									leagueRanking: 0.0,
+									leagueTotal: 0.0,
+									points: 1.0,
+									statId: 76,
+								},
+							],
+						},
+						tradeSettings: {
+							deadlineDate: 123412341234124,
+						},
+					},
+				},
+			});
+
+			expect(await league.init()).toMatchSnapshot();
+		});
+
+		it('should catch errors and throw by init', async () => {
+			jest.spyOn(axios, 'request').mockRejectedValueOnce('error');
+
+			await expect(league.init()).rejects.toMatchSnapshot();
+		});
+	});
+
 	describe('teams', () => {
 		it('should be defined', () => {
 			expect(league.teams()).toBeDefined();
+		});
+	});
+
+	describe('players', () => {
+		it('should be defined', () => {
+			expect(league.players()).toBeDefined();
 		});
 	});
 

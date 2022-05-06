@@ -27,3 +27,45 @@ Array [
   },
 ]
 `;
+
+exports[`League init should catch errors and throw by init 1`] = `[Error: error]`;
+
+exports[`League init should get init team data 1`] = `
+League {
+  "cookies": undefined,
+  "fantasyRequests": FantasyRequest {
+    "cookies": undefined,
+    "endpoint": "https://fantasy.espn.com/apis/v3/games/flb/seasons/2022/segments/0/leagues/1",
+  },
+  "hittingScoreStats": Object {
+    "R": 1,
+  },
+  "leagueId": 1,
+  "pitchingScoreStats": Object {
+    "PTW": 1,
+  },
+  "positionCounts": Object {
+    "1B": 1,
+    "1B/3B": 1,
+    "2B": 1,
+    "2B/SS": 1,
+    "3B": 1,
+    "??": 0,
+    "BE": 4,
+    "C": 1,
+    "CF": 0,
+    "DH": 0,
+    "IF": 0,
+    "IL": 3,
+    "LF": 0,
+    "OF": 5,
+    "P": 0,
+    "RF": 0,
+    "RP": 3,
+    "SP": 5,
+    "SS": 1,
+    "UTIL": 1,
+  },
+  "tradeDeadline": 123412341234124,
+}
+`;
