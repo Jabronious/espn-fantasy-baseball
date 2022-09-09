@@ -1,6 +1,6 @@
 # espn-fantasy-baseball
 [![ESPN Fantasy Baseball Actions](https://github.com/Jabronious/espn-fantasy-baseball/actions/workflows/espn-fb-actions.yml/badge.svg)](https://github.com/Jabronious/espn-fantasy-baseball/actions/workflows/espn-fb-actions.yml)  
-A node wrapper that encompasses the ESPN Fantasy Baseball API
+A node wrapper that encompasses the ESPN Fantasy Baseball API. This is an ongoing project and documentation is subject to change rapidly.
 
 # Current Discovered Endpoints:
 - Retreive API Key (v6 is used in prod. However, login api requires reCapthca it looks like)  
