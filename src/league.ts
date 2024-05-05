@@ -24,7 +24,7 @@ export class League extends BaseClass {
 		const params = {
 			view: 'mSettings',
 		};
-		const fLeagueRes = await this.fantasyRequests.get('', {}, params).catch((e) => {
+		const fLeagueRes = await this.fantasyRequests.get('', {}, params).catch((e: string) => {
 			throw new Error(e);
 		});
 
