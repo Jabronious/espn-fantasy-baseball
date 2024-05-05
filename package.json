@@ -1,7 +1,7 @@
 {
 	"name": "espn-fantasy-baseball",
-	"version": "0.1.1",
-	"description": "Base repo for typescript projects",
+	"version": "0.1.2",
+	"description": "ESPN fantasy baseball wrapper",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
 	"repository": "https://github.com/Jabronious/espn-fantasy-baseball.git",
