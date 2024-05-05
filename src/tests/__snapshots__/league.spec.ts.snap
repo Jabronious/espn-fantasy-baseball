@@ -35,7 +35,7 @@ League {
   "cookies": undefined,
   "fantasyRequests": FantasyRequest {
     "cookies": undefined,
-    "endpoint": "https://fantasy.espn.com/apis/v3/games/flb/seasons/2022/segments/0/leagues/1",
+    "endpoint": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2024/segments/0/leagues/1",
   },
   "hittingScoreStats": Object {
     "R": 1,
