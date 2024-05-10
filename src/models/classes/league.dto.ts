@@ -1,5 +1,3 @@
-import { Positions } from '../enums/positions';
-import { HittingStats, PitchingStats, Stats } from '../enums/stats';
 import { ILeague } from '../interfaces/i-league';
 import { IRosterSettings, IScoringSettings, ISettings, ITradeSettings } from '../interfaces/i-settings';
 import { MemberDto } from './member.dto';

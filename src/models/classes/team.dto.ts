@@ -1,5 +1,4 @@
 import { ITeam } from '../interfaces/i-team';
-import { SWID } from './espn-cookies.dto';
 import { PlayerDto } from './player.dto';
 
 export class RecordDto {
