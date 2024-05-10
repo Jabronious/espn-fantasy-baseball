@@ -58,7 +58,7 @@ export class FantasyRequest {
 			url: `${this.endpoint}${path}`,
 			method: 'POST',
 			params,
-			headers: { headers, ...setCookies },
+			headers: { ...headers, ...setCookies },
 		};
 
 		const response = await axios.request(request);

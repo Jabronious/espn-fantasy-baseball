@@ -2,13 +2,13 @@
 
 exports[`FantasyRequest get should accept multiple of the same params 1`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "headers": Object {},
+  "calls": [
+    [
+      {
+        "headers": {},
         "method": "GET",
-        "params": Object {
-          "views": Array [
+        "params": {
+          "views": [
             "1",
             "2",
           ],
@@ -18,8 +18,8 @@ exports[`FantasyRequest get should accept multiple of the same params 1`] = `
       },
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": Promise {},
     },

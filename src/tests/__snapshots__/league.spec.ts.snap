@@ -3,8 +3,8 @@
 exports[`League getLeagueMembers should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`League getLeagueMembers should get all league members 1`] = `
-Array [
-  Object {
+[
+  {
     "displayName": "string",
     "id": 12345,
     "isLeagueManager": true,
@@ -15,7 +15,7 @@ Array [
 exports[`League getLeagueTeams should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`League getLeagueTeams should get all league teams 1`] = `
-Object {
+{
   "abbrev": "CDMD",
 }
 `;
@@ -23,8 +23,8 @@ Object {
 exports[`League getWeeklyMatchups should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`League getWeeklyMatchups should get the weekly matchups 1`] = `
-Array [
-  Object {
+[
+  {
     "matchupPeriodId": 1,
   },
 ]
@@ -34,25 +34,25 @@ exports[`League init should catch errors and throw by init 1`] = `[Error: error]
 
 exports[`League init should get init team data 1`] = `
 League {
-  "cookies": Object {
+  "cookies": {
     "espn_s2": "2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%",
     "swid": "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
   },
   "fantasyRequests": FantasyRequest {
-    "cookies": Object {
+    "cookies": {
       "espn_s2": "2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%",
       "swid": "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
     },
     "endpoint": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2024/segments/0/leagues/1",
   },
-  "hittingScoreStats": Object {
+  "hittingScoreStats": {
     "R": 1,
   },
   "leagueId": 1,
-  "pitchingScoreStats": Object {
+  "pitchingScoreStats": {
     "PTW": 1,
   },
-  "positionCounts": Object {
+  "positionCounts": {
     "1B": 1,
     "1B/3B": 1,
     "2B": 1,
