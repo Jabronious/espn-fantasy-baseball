@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { League } from '../league';
+import { ESPNCookiesDto } from '../models/classes/espn-cookies.dto';
+import { NotFound } from '../models/errors/not-found';
 
 describe('League', () => {
-	const league = new League(1);
+	const cookies: ESPNCookiesDto = {
+		espn_s2: '2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%',
+		swid: '{A11A1111-1AAA-111A-1A11-111AAA111A1A}',
+	};
+	const league = new League(1, cookies);
 
 	it('should be defined', () => {
 		expect(league).toBeDefined();
@@ -101,7 +107,7 @@ describe('League', () => {
 	describe('getLeagueMembers', () => {
 		it('should get all league members', async () => {
 			jest.spyOn(axios, 'request').mockResolvedValueOnce({
-				data: { members: { displayName: 'string', id: 12345, isLeagueManager: true } },
+				data: { members: [{ displayName: 'string', id: 12345, isLeagueManager: true }] },
 			});
 
 			expect(await league.getLeagueMembers()).toMatchSnapshot();
@@ -111,6 +117,32 @@ describe('League', () => {
 			jest.spyOn(axios, 'request').mockRejectedValueOnce('error');
 
 			await expect(league.getLeagueMembers()).rejects.toMatchSnapshot();
+		});
+	});
+
+	describe('isLeagueManager', () => {
+		it('should return true when isLeagueManager is true', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: { members: [{ displayName: 'string', id: cookies.swid, isLeagueManager: true }] },
+			});
+
+			expect(await league.isLeagueManager()).toBeTruthy();
+		});
+
+		it('should return false when isLeagueManager is false', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: { members: [{ displayName: 'string', id: 'swid', isLeagueManager: false }] },
+			});
+
+			expect(await league.isLeagueManager()).toBeFalsy();
+		});
+
+		it('should return false when no members are found', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: {},
+			});
+
+			await expect(league.isLeagueManager()).rejects.toThrowError(NotFound);
 		});
 	});
 

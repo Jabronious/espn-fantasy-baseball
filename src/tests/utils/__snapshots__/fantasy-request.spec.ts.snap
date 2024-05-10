@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FantasyRequest get should accept multiple of the same params 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "headers": Object {},
+        "method": "GET",
+        "params": Object {
+          "views": Array [
+            "1",
+            "2",
+          ],
+        },
+        "paramsSerializer": [Function],
+        "url": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/leagueHistory/1234?seasonId=1999",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;

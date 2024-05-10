@@ -1,6 +1,7 @@
 import { ESPNCookiesDto } from '../models/classes/espn-cookies.dto';
 import { env } from '../configuration';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { stringify } from 'querystring';
 
 export class FantasyRequest {
 	endpoint: string;
@@ -18,24 +19,25 @@ export class FantasyRequest {
 	 * @param headers: required headers for the request being made
 	 * @param params: optional values to be made with the request
 	 */
-	async get(
+	async get<T>(
 		path: string = '',
 		headers: { [key: string]: unknown } = {},
-		params: { [key: string]: unknown } = {}
-	): Promise<AxiosResponse> {
-		const setCookies = !this.cookies
-			? {}
-			: { Cookie: `espn_s2=${this.cookies?.espn_s2}; swid=${this.cookies?.swid};` };
+		params: { [key: string]: unknown | unknown[] } = {}
+	): Promise<T> {
+		const setCookies = this.cookies
+			? { Cookie: `espn_s2=${this.cookies.espn_s2}; swid=${this.cookies.swid};` }
+			: {};
 
 		const request: AxiosRequestConfig = {
 			url: `${this.endpoint}${path}`,
 			method: 'GET',
 			params,
-			headers: { headers, ...setCookies },
+			paramsSerializer: (params) => stringify(params, '&'),
+			headers: { ...headers, ...setCookies },
 		};
 
-		const response = await axios.request(request);
-		return response;
+		const response = await axios.request<T>(request);
+		return response.data;
 	}
 
 	/**
@@ -61,12 +63,5 @@ export class FantasyRequest {
 
 		const response = await axios.request(request);
 		return response;
-	}
-
-	/**
-	 * @param {ESPNCookiesDto} cookies - Espn cookies used to authorize request
-	 */
-	setEspnCookies(cookies: ESPNCookiesDto): void {
-		this.cookies = cookies;
 	}
 }

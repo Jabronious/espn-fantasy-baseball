@@ -20,6 +20,7 @@
 	"scripts": {
 		"prepare": "yarn run build",
 		"test": "jest --config jest.config.json --coverage",
+		"test:cov": "jest --config jest.config.json --coverage --coverageDirectory=./coverage",
 		"build": "tsc"
 	},
 	"devDependencies": {

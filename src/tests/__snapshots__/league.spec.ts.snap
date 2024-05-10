@@ -3,11 +3,13 @@
 exports[`League getLeagueMembers should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`League getLeagueMembers should get all league members 1`] = `
-Object {
-  "displayName": "string",
-  "id": 12345,
-  "isLeagueManager": true,
-}
+Array [
+  Object {
+    "displayName": "string",
+    "id": 12345,
+    "isLeagueManager": true,
+  },
+]
 `;
 
 exports[`League getLeagueTeams should catch errors and throw them 1`] = `[Error: error]`;
@@ -32,9 +34,15 @@ exports[`League init should catch errors and throw by init 1`] = `[Error: error]
 
 exports[`League init should get init team data 1`] = `
 League {
-  "cookies": undefined,
+  "cookies": Object {
+    "espn_s2": "2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%",
+    "swid": "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
+  },
   "fantasyRequests": FantasyRequest {
-    "cookies": undefined,
+    "cookies": Object {
+      "espn_s2": "2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%",
+      "swid": "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
+    },
     "endpoint": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2024/segments/0/leagues/1",
   },
   "hittingScoreStats": Object {

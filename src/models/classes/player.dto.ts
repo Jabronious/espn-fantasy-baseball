@@ -1,4 +1,5 @@
 import { IPlayer } from '../interfaces/i-player';
+import { IPlayerResponse } from '../interfaces/i-player-response';
 
 export class PlayerDto implements IPlayer {
 	active: boolean;
@@ -61,5 +62,13 @@ export class PlayerDto implements IPlayer {
 		this.starterStatusByProGame = starterStatusByProGame;
 		this.stats = stats;
 		this.universeId = universeId;
+	}
+}
+
+export class PlayerResponseDto implements IPlayerResponse {
+	player: PlayerDto;
+
+	constructor(player: PlayerDto) {
+		this.player = player;
 	}
 }

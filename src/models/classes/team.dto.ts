@@ -1,4 +1,6 @@
 import { ITeam } from '../interfaces/i-team';
+import { SWID } from './espn-cookies.dto';
+import { PlayerDto } from './player.dto';
 
 export class RecordDto {
 	gamesBack!: number;
@@ -92,12 +94,14 @@ export class TeamDto implements ITeam {
 		teamCharges: number;
 		trades: number;
 	};
+	roster: { entries: [{ playerPoolEntry: { player: PlayerDto } }] };
 
 	constructor(
 		abbrev: string,
 		id: number,
 		location: string,
 		nickname: string,
+		name: string,
 		owners: [string],
 		currentProjectedRank: number,
 		divisionId: number,
@@ -116,14 +120,15 @@ export class TeamDto implements ITeam {
 		rankCalculatedFinal: number,
 		rankFinal: number,
 		record: { [key in keyof typeof RecordEnum]: RecordDto },
-		transactionCounter: { [key in keyof typeof TransactionCounterEnum]: any }
+		transactionCounter: { [key in keyof typeof TransactionCounterEnum]: any },
+		roster: { entries: [{ playerPoolEntry: { player: PlayerDto } }] }
 	) {
 		this.abbrev = abbrev;
 		this.id = id;
 		this.location = location;
 		this.nickname = nickname;
 		this.owners = owners;
-		this.name = `${location} ${nickname}`;
+		this.name = name;
 		this.currentProjectedRank = currentProjectedRank;
 		this.divisionId = divisionId;
 		this.draftDayProjectedRank = draftDayProjectedRank;
@@ -142,5 +147,6 @@ export class TeamDto implements ITeam {
 		this.rankFinal = rankFinal;
 		this.record = record;
 		this.transactionCounter = transactionCounter;
+		this.roster = roster;
 	}
 }

@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Teams getAllTeamsRoster should catch errors and throw them 1`] = `[Error: error]`;
+exports[`Teams getAllTeamsRoster should catch errors and throw them on leagueRosterData 1`] = `[Error: error]`;
+
+exports[`Teams getAllTeamsRoster should catch errors and throw them on leagueTeamData 1`] = `[Error: error]`;
 
 exports[`Teams getAllTeamsRoster should get all the teams rosters 1`] = `
 Object {
@@ -17,6 +19,8 @@ Object {
 }
 `;
 
+exports[`Teams getAllTeamsRoster should return blank list because there are no teams 1`] = `Object {}`;
+
 exports[`Teams getDetailedTeamData should catch errors and throw them 1`] = `[Error: error]`;
 
 exports[`Teams getDetailedTeamData should get all details for a team 1`] = `
@@ -24,6 +28,22 @@ Object {
   "abbrev": "CDMD",
 }
 `;
+
+exports[`Teams getTeamInfoFromSWID should catch errors and throw them 1`] = `[Error: error]`;
+
+exports[`Teams getTeamInfoFromSWID should catch errors and throw them 2`] = `[Error: error]`;
+
+exports[`Teams getTeamInfoFromSWID should get team info 1`] = `
+Object {
+  "owners": Array [
+    "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
+  ],
+}
+`;
+
+exports[`Teams getTeamInfoFromSWID should get team info 2`] = `Array []`;
+
+exports[`Teams getTeamInfoFromSWID should throw a team not found error 1`] = `[TeamNotFound: Team was not found in the league]`;
 
 exports[`Teams getTeamRoster should catch errors and throw them 1`] = `[Error: error]`;
 
