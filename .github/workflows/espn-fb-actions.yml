@@ -13,7 +13,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [16.x]
+                node-version: [latest]
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
@@ -31,7 +31,7 @@ jobs:
             # Setup .npmrc file to publish to npm
             - uses: actions/setup-node@v3
               with:
-                  node-version: '16.x'
+                  node-version: ${{ matrix.node-version }}
                   registry-url: 'https://registry.npmjs.org'
             - run: npm publish
               env:
