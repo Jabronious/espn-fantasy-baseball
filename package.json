@@ -1,10 +1,13 @@
 {
 	"name": "espn-fantasy-baseball",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "ESPN fantasy baseball wrapper",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
-	"repository": "https://github.com/Jabronious/espn-fantasy-baseball.git",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jabronious/espn-fantasy-baseball.git"
+	},
 	"author": "Jabronious",
 	"license": "MIT",
 	"files": [
