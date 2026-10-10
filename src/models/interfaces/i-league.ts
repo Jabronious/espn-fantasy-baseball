@@ -1,3 +1,4 @@
+import { LeagueStatus } from '../types';
 import { IMember } from './i-member';
 import { ITeam } from './i-team';
 
@@ -11,10 +12,6 @@ export interface ILeague {
 	settings: {
 		name: string;
 	};
-	status: {
-		currentMatchupPeriod: number;
-		isActive: boolean;
-		latestScoringPeriod: number;
-	};
+	status: LeagueStatus;
 	teams: [ITeam];
 }

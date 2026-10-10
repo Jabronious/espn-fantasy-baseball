@@ -24,7 +24,8 @@
 		"prepare": "husky",
 		"test": "jest --config jest.config.json --coverage",
 		"test:cov": "jest --config jest.config.json --coverage --coverageDirectory=./coverage",
-		"build": "tsc"
+		"build": "tsc",
+		"prepublishOnly": "tsc"
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.12",

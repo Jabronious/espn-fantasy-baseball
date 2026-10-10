@@ -10,7 +10,11 @@ describe('Teams', () => {
 		espn_s2: '2B7uOaY7pTx8neDj061z24T3PdDPn6a29EHEMEfelzI6HLT43oy1P%%2BUTkzYAsk%2BkxgrK%',
 		swid: '{A11A1111-1AAA-111A-1A11-111AAA111A1A}',
 	};
-	const teams = new Teams(1, cookies);
+	const teams = new Teams(1, cookies, 2024);
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
 
 	it('should be defined', () => {
 		expect(teams).toBeDefined();
@@ -99,69 +103,105 @@ describe('Teams', () => {
 	});
 
 	describe('getAllTeamsRoster', () => {
-		it('should get all the teams rosters', async () => {
-			jest.spyOn(axios, 'request')
-				.mockResolvedValueOnce({
-					data: {
-						teams: [
-							{ id: 1, roster },
-							{ id: 2, roster },
-						],
-					},
-				})
-				.mockResolvedValueOnce({
-					data: {
-						teams: [
-							{ id: 1, name: 'team1' },
-							{ id: 2, name: 'team two' },
-						],
-					},
-				});
+		it('should get all the teams rosters in one request', async () => {
+			const spy = jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: {
+					teams: [
+						{ id: 1, name: 'team1 ', roster },
+						{ id: 2, name: 'team two', roster },
+					],
+				},
+			});
 
 			expect(await teams.getAllTeamsRoster()).toMatchSnapshot();
+			expect(spy).toHaveBeenCalledTimes(1);
+			expect(spy.mock.calls[0][0].params).toEqual({ view: ['mTeam', 'mRoster'] });
 		});
 
 		it('should return blank list because there are no teams', async () => {
-			jest.spyOn(axios, 'request')
-				.mockResolvedValueOnce({
-					data: {
-						teams: [
-							{ id: 1, roster },
-							{ id: 2, roster },
-						],
-					},
-				})
-				.mockResolvedValueOnce({
-					data: {
-						teams: [
-							{ id: 3, name: 'team1' },
-							{ id: 4, name: 'team two' },
-						],
-					},
-				});
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({ data: { teams: [] } });
 
-			expect(await teams.getAllTeamsRoster()).toMatchSnapshot();
+			expect(await teams.getAllTeamsRoster()).toEqual({});
 		});
 
-		it('should catch errors and throw them on leagueRosterData', async () => {
+		it('should catch errors and throw them', async () => {
 			jest.spyOn(axios, 'request').mockRejectedValueOnce('error');
 
 			await expect(teams.getAllTeamsRoster()).rejects.toMatchSnapshot();
 		});
+	});
 
-		it('should catch errors and throw them on leagueTeamData', async () => {
-			jest.spyOn(axios, 'request')
-				.mockResolvedValueOnce({
-					data: {
-						teams: [
-							{ id: 1, roster },
-							{ id: 2, roster },
+	describe('getRostersByTeamId', () => {
+		it('should key rosters by team id for a scoring period', async () => {
+			const spy = jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: { teams: [{ id: 3, roster }, { id: 4 }] },
+			});
+
+			expect(await teams.getRostersByTeamId(42)).toEqual({ 3: [{ fullName: 'Jose Ramirez' }] });
+			expect(spy.mock.calls[0][0].params).toEqual({ view: 'mRoster', scoringPeriodId: 42 });
+		});
+	});
+
+	describe('getTeamLineup', () => {
+		it('should resolve slots, pro team and lock state', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: {
+					roster: {
+						entries: [
+							{
+								playerId: 32758,
+								lineupSlotId: 16,
+								injuryStatus: 'ACTIVE',
+								playerPoolEntry: {
+									lineupLocked: true,
+									player: {
+										id: 32758,
+										fullName: 'Christian Walker',
+										proTeamId: 29,
+										eligibleSlots: [1, 19, 12, 16, 17],
+									},
+								},
+							},
 						],
 					},
-				})
-				.mockRejectedValueOnce('error');
+				},
+			});
 
-			await expect(teams.getAllTeamsRoster()).rejects.toMatchSnapshot();
+			const [player] = await teams.getTeamLineup(1);
+			expect(player).toMatchObject({
+				playerId: 32758,
+				fullName: 'Christian Walker',
+				lineupSlotId: 16,
+				lineupSlot: 'BE',
+				eligibleSlots: ['1B', 'IF', 'UTIL', 'BE', 'IL'],
+				proTeam: 'Ari',
+				injuryStatus: 'ACTIVE',
+				lineupLocked: true,
+			});
+		});
+	});
+
+	describe('updateWatchList', () => {
+		it('should post the watch list to the write endpoint', async () => {
+			const spy = jest.spyOn(axios, 'request').mockResolvedValueOnce({ data: {} });
+
+			await teams.updateWatchList(15, [1, 2]);
+			const request = spy.mock.calls[0][0];
+			expect(request.method).toBe('POST');
+			expect(request.url).toBe(
+				'https://lm-api-writes.fantasy.espn.com/apis/v3/games/flb/seasons/2024/segments/0/leagues/1/teams/15'
+			);
+			expect(request.data).toEqual({ watchList: [1, 2] });
+		});
+	});
+
+	describe('getTeamInfoFromSWID casing', () => {
+		it('should match owners regardless of SWID casing', async () => {
+			jest.spyOn(axios, 'request').mockResolvedValueOnce({
+				data: [{ id: 9, owners: [cookies.swid.toLowerCase()] }],
+			});
+
+			expect((await teams.getTeamInfoFromSWID())?.id).toBe(9);
 		});
 	});
 });

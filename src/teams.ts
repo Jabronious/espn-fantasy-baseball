@@ -4,10 +4,14 @@ import { LeagueDto } from './models/classes/league.dto';
 import { PlayerDto } from './models/classes/player.dto';
 import { TeamDto } from './models/classes/team.dto';
 import { TeamNotFound } from './models/errors/team-not-found';
+import { LineupPlayer, RosterEntry } from './models/types';
+import { toLineupPlayer } from './utils/player-utils';
+
+type Roster = { entries: [{ playerPoolEntry: { player: PlayerDto } }] };
 
 export class Teams extends BaseClass {
-	constructor(leagueId: number, cookies?: ESPNCookiesDto) {
-		super(leagueId, cookies);
+	constructor(leagueId: number, cookies?: ESPNCookiesDto, year?: number) {
+		super(leagueId, cookies, year);
 	}
 
 	/**
@@ -16,11 +20,7 @@ export class Teams extends BaseClass {
 	 */
 	async getDetailedTeamData(teamId: number): Promise<TeamDto> {
 		const params = { view: 'mTeam' };
-		const team = await this.fantasyRequests.get<TeamDto>(`/teams/${teamId}`, {}, params).catch((e) => {
-			throw new Error(e);
-		});
-
-		return team;
+		return this.fantasyRequests.get<TeamDto>(`/teams/${teamId}`, {}, params);
 	}
 
 	/**
@@ -47,46 +47,82 @@ export class Teams extends BaseClass {
 
 	/**
 	 * @param {number} teamId - team id for the team you wish to get the roster for
+	 * @param {number} [scoringPeriodId] - roster as of that scoring period (day); defaults to today
 	 * @returns Team roster data for the given team id
 	 */
-	async getTeamRoster(teamId: number): Promise<PlayerDto[]> {
-		const params = { view: 'mRoster' };
-		const team = await this.fantasyRequests.get<TeamDto>(`/teams/${teamId}`, {}, params).catch((e) => {
-			throw new Error(e);
-		});
+	async getTeamRoster(teamId: number, scoringPeriodId?: number): Promise<PlayerDto[]> {
+		const team = await this.fantasyRequests.get<TeamDto>(
+			`/teams/${teamId}`,
+			{},
+			this.rosterParams('mRoster', scoringPeriodId)
+		);
 
 		return this.getPlayersFromEspnRoster(team.roster);
 	}
 
 	/**
-	 * @returns All team roster data for the league
+	 * A team's lineup with slot, eligibility, MLB team, injury and lock state resolved, e.g. to
+	 * flag benched starters or injured players in active slots.
+	 * @param {number} teamId - team id
+	 * @param {number} [scoringPeriodId] - lineup for that scoring period (day); defaults to today
+	 */
+	async getTeamLineup(teamId: number, scoringPeriodId?: number): Promise<LineupPlayer[]> {
+		const team = await this.fantasyRequests.get<{ roster?: { entries?: RosterEntry[] } }>(
+			`/teams/${teamId}`,
+			{},
+			this.rosterParams('mRoster', scoringPeriodId)
+		);
+		return (team.roster?.entries || []).map(toLineupPlayer);
+	}
+
+	/**
+	 * @returns All team roster data for the league keyed by team name
 	 */
 	async getAllTeamsRoster(): Promise<{ [key: string]: PlayerDto[] }> {
-		const rosterParams = { view: 'mRoster' };
-		const leagueRosterData = await this.fantasyRequests.get<LeagueDto>('', {}, rosterParams).catch((e) => {
-			throw new Error(e);
-		});
+		const leagueData = await this.fantasyRequests.get<LeagueDto>('', {}, { view: ['mTeam', 'mRoster'] });
 
-		const teamParams = { view: 'mTeam' };
-		const leagueTeamData = await this.fantasyRequests.get<LeagueDto>('', {}, teamParams).catch((e) => {
-			throw new Error(e);
-		});
-
-		const teams = leagueTeamData.teams;
 		const teamRosters: { [key: string]: PlayerDto[] } = {};
-		teams.forEach((team: { name: string; id: number }) => {
-			const tempTeam = leagueRosterData.teams.find((rosterTeam: { id: number }) => {
-				return rosterTeam.id === team.id;
-			});
-			if (tempTeam) {
-				teamRosters[team.name.trim()] = this.getPlayersFromEspnRoster(tempTeam.roster);
+		(leagueData.teams || []).forEach((team) => {
+			if (team.name && team.roster) {
+				teamRosters[team.name.trim()] = this.getPlayersFromEspnRoster(team.roster);
 			}
 		});
 		return teamRosters;
 	}
 
-	private getPlayersFromEspnRoster(roster: { entries: [{ playerPoolEntry: { player: PlayerDto } }] }): PlayerDto[] {
-		return roster.entries.map((entry: { playerPoolEntry: { player: PlayerDto } }) => {
+	/**
+	 * Team names can change or collide; prefer this over getAllTeamsRoster for lookups.
+	 * @param {number} [scoringPeriodId] - rosters as of that scoring period (day); defaults to today
+	 * @returns All team rosters keyed by team id
+	 */
+	async getRostersByTeamId(scoringPeriodId?: number): Promise<{ [teamId: number]: PlayerDto[] }> {
+		const leagueData = await this.fantasyRequests.get<LeagueDto>(
+			'',
+			{},
+			this.rosterParams('mRoster', scoringPeriodId)
+		);
+
+		return (leagueData.teams || []).reduce((acc: { [teamId: number]: PlayerDto[] }, team) => {
+			if (team.roster) acc[team.id] = this.getPlayersFromEspnRoster(team.roster);
+			return acc;
+		}, {});
+	}
+
+	/**
+	 * Replaces a team's watch list. Requires the team owner's cookies.
+	 * @param {number} teamId - team id
+	 * @param {number[]} playerIds - the full watch list to save
+	 */
+	async updateWatchList(teamId: number, playerIds: number[]): Promise<unknown> {
+		return this.fantasyRequests.post(`/teams/${teamId}`, { watchList: playerIds });
+	}
+
+	private rosterParams(view: string, scoringPeriodId?: number): { [key: string]: unknown } {
+		return scoringPeriodId === undefined ? { view } : { view, scoringPeriodId };
+	}
+
+	private getPlayersFromEspnRoster(roster: Roster): PlayerDto[] {
+		return (roster?.entries || []).map((entry: { playerPoolEntry: { player: PlayerDto } }) => {
 			return entry.playerPoolEntry.player;
 		});
 	}
@@ -97,12 +133,11 @@ export class Teams extends BaseClass {
 			[key: string]: unknown;
 		}
 	): Promise<TeamDto> {
-		const _swid = swid.swid;
-		const teams = await this.fantasyRequests.get<TeamDto[]>(`/teams`, {}, params).catch((e) => {
-			throw new Error(e);
-		});
+		// ESPN is inconsistent about SWID casing between cookies and payloads
+		const _swid = swid.swid.toUpperCase();
+		const teams = await this.fantasyRequests.get<TeamDto[]>(`/teams`, {}, params);
 
-		const team = teams.find((team: TeamDto) => team.owners.includes(_swid));
+		const team = teams.find((team: TeamDto) => (team.owners || []).some((owner) => owner.toUpperCase() === _swid));
 
 		if (!team) {
 			throw new TeamNotFound();
