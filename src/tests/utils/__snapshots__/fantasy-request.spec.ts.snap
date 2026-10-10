@@ -8,13 +8,14 @@ exports[`FantasyRequest get should accept multiple of the same params 1`] = `
         "headers": {},
         "method": "GET",
         "params": {
+          "seasonId": 1999,
           "views": [
             "1",
             "2",
           ],
         },
         "paramsSerializer": [Function],
-        "url": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/leagueHistory/1234?seasonId=1999",
+        "url": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/leagueHistory/1234",
       },
     ],
   ],

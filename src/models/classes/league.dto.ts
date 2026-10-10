@@ -1,3 +1,4 @@
+import { LeagueStatus } from '../types';
 import { ILeague } from '../interfaces/i-league';
 import { IRosterSettings, IScoringSettings, ISettings, ITradeSettings } from '../interfaces/i-settings';
 import { MemberDto } from './member.dto';
@@ -11,11 +12,7 @@ export class LeagueDto implements ILeague {
 	seasonId: number;
 	segmentId: number;
 	settings: SettingsDto;
-	status: {
-		currentMatchupPeriod: number;
-		isActive: boolean;
-		latestScoringPeriod: number;
-	};
+	status: LeagueStatus;
 	teams: [TeamDto];
 
 	constructor(
@@ -26,11 +23,7 @@ export class LeagueDto implements ILeague {
 		seasonId: number,
 		segmentId: number,
 		settings: SettingsDto,
-		status: {
-			currentMatchupPeriod: number;
-			isActive: boolean;
-			latestScoringPeriod: number;
-		},
+		status: LeagueStatus,
 		teams: [TeamDto]
 	) {
 		this.gameId = gameId;

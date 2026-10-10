@@ -44,11 +44,15 @@ League {
       "swid": "{A11A1111-1AAA-111A-1A11-111AAA111A1A}",
     },
     "endpoint": "https://lm-api-reads.fantasy.espn.com/apis/v3/games/flb/seasons/2024/segments/0/leagues/1",
+    "historical": false,
+    "leagueId": 1,
+    "year": 2024,
   },
   "hittingScoreStats": {
     "R": 1,
   },
   "leagueId": 1,
+  "name": undefined,
   "pitchingScoreStats": {
     "PTW": 1,
   },
@@ -74,6 +78,14 @@ League {
     "SS": 1,
     "UTIL": 1,
   },
+  "scoringPeriodId": undefined,
+  "scoringStats": {
+    "P_G_W": 1,
+    "R": 1,
+  },
+  "scoringType": undefined,
+  "status": undefined,
   "tradeDeadline": 123412341234124,
+  "year": 2024,
 }
 `;

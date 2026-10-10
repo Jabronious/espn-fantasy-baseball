@@ -1,10 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Teams getAllTeamsRoster should catch errors and throw them on leagueRosterData 1`] = `[Error: error]`;
+exports[`Teams getAllTeamsRoster should catch errors and throw them 1`] = `[Error: error]`;
 
-exports[`Teams getAllTeamsRoster should catch errors and throw them on leagueTeamData 1`] = `[Error: error]`;
-
-exports[`Teams getAllTeamsRoster should get all the teams rosters 1`] = `
+exports[`Teams getAllTeamsRoster should get all the teams rosters in one request 1`] = `
 {
   "team two": [
     {
@@ -18,8 +16,6 @@ exports[`Teams getAllTeamsRoster should get all the teams rosters 1`] = `
   ],
 }
 `;
-
-exports[`Teams getAllTeamsRoster should return blank list because there are no teams 1`] = `{}`;
 
 exports[`Teams getDetailedTeamData should catch errors and throw them 1`] = `[Error: error]`;
 
